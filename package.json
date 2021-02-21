@@ -26,8 +26,8 @@
   "scripts": {
     "browserify": "browserify --standalone CleanCSS index.js | uglifyjs --compress --mangle -o cleancss-browser.js",
     "bench": "node ./test/bench.js",
-    "check": "jshint .",
-    "prepublish": "npm run check",
+    "check": "xo",
+    "lint": "xo",
     "test": "vows"
   },
   "dependencies": {
@@ -36,13 +36,70 @@
   "devDependencies": {
     "browserify": "^17.0.0",
     "http-proxy": "1.x",
-    "jshint": "2.x",
     "nock": "^13.0.0",
     "server-destroy": "1.x",
     "uglify-js": ">=2.6.1",
-    "vows": "0.8.x"
+    "vows": "0.8.x",
+    "xo": "^0.38.2"
   },
   "engines": {
     "node": ">= 10.0"
+  },
+  "xo": {
+    "esnext": true,
+    "space": true,
+    "ignores": [
+      "docs/**/*.js",
+      "cleancss-browser.js"
+    ],
+    "rules": {
+      "capitalized-comments": "off",
+      "complexity": "off",
+      "curly": [
+        "off",
+        "multi-or-nest",
+        "consistent"
+      ],
+      "eqeqeq": "off",
+      "func-names": "off",
+      "max-depth": "off",
+      "no-eq-null": "off",
+      "no-mixed-operators": "off",
+      "no-multi-assign": "off",
+      "no-negated-condition": "off",
+      "object-curly-spacing": [
+        "off",
+        "always"
+      ],
+      "one-var": "off",
+      "promise/prefer-await-to-then": "off",
+      "quote-props": [
+        "off",
+        "consistent-as-needed"
+      ],
+      "space-before-function-paren": [
+        "error",
+        "never"
+      ],
+      "spaced-comment": "off",
+      "unicorn/better-regex": "off",
+      "unicorn/catch-error-name": "off",
+      "unicorn/error-message": "off",
+      "unicorn/explicit-length-check": "off",
+      "unicorn/no-array-callback-reference": "off",
+      "unicorn/no-array-for-each": "off",
+      "unicorn/no-array-reduce": "off",
+      "unicorn/no-for-loop": "off",
+      "unicorn/no-this-assignment": "off",
+      "unicorn/prefer-array-find": "off",
+      "unicorn/prefer-includes": "off",
+      "unicorn/prefer-math-trunc": "off",
+      "unicorn/prefer-number-properties": "off",
+      "unicorn/prefer-regexp-test": "off",
+      "unicorn/prefer-spread": "off",
+      "unicorn/prefer-string-slice": "off",
+      "unicorn/prefer-ternary": "off",
+      "unicorn/prevent-abbreviations": "off"
+    }
   }
 }
