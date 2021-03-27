@@ -1,28 +1,25 @@
-var CleanCSS = require('../index');
+'use strict';
 
-var input = '@import url(test/fixtures/bench/complex.css);';
-var total;
-var level;
-var i;
-var start;
-var itTook;
+const Benchmark = require('benchmark');
+const CleanCSS = require('..');
 
-// warmup
-console.log('Warming up...');
-for (i = 1; i <= 10; i++) {
-  new CleanCSS({ level: 2 }).minify(input);
+const input = '@import url(test/fixtures/bench/complex.css);';
+const suite = new Benchmark.Suite({
+  async: true,
+  initCount: 10,
+  minSamples: 100,
+  maxTime: 30,
+  minTime: 10
+});
+
+for (let level = 0; level < 3; level++) {
+  suite.add(`CleanCSS level ${level}`, () => {
+    new CleanCSS({ level }).minify(input);
+  });
 }
 
-for (level = 0; level < 3; level ++) {
-  total = 0;
+suite.on('cycle', event => {
+  console.log(String(event.target));
+});
 
-  for (i = 1; i <= 10; i++) {
-    start = process.hrtime();
-    new CleanCSS({ level: level }).minify(input);
-
-    itTook = process.hrtime(start);
-    total += 1000 * itTook[0] + itTook[1] / 1000000;
-  }
-
-  console.log('Average over 10 runs on level %d: %d ms', level, total / 10);
-}
+suite.run();
